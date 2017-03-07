@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """
 export-saved.py
-
 Christopher Su
 Exports saved Reddit posts into a HTML file that is ready to be imported into Google Chrome.
 """
@@ -13,8 +12,6 @@ import logging
 import sys
 
 import praw
-
-
 # # Converter class from https://gist.github.com/raphaa/1327761
 class Converter():
     """Converts a CSV instapaper export to a Chrome bookmark file."""
@@ -32,10 +29,7 @@ class Converter():
         parsed_urls = {}
         next(urls)
         for url in urls:
-            if not url:
-                continue
-            else:
-                folder = url[4].strip()
+            folder = url[4].strip()
             if folder not in list(parsed_urls.keys()):
                 parsed_urls[folder] = []
             parsed_urls[folder].append([url[0], url[1], url[2]])
@@ -67,10 +61,8 @@ class Converter():
 
 def get_args(argv):
     """get args.
-
     Args:
         argv (list): List of arguments.
-
     Returns:
         argparse.Namespace: Parsed arguments.
     """
@@ -99,10 +91,8 @@ def get_args(argv):
 
 def login(args):
     """login method.
-
     Args:
         args (argparse.Namespace): Parsed arguments.
-
     Returns: a logged on praw instance
     """
     # login
@@ -122,10 +112,8 @@ def login(args):
 
 def account_details(args):
     """Extract account informations.
-
     Args:
         args (argparse.Namespace): Parsed arguments.
-
     Returns:
         Account details
     """
@@ -171,11 +159,9 @@ def account_details(args):
 
 def get_csv_rows(reddit, seq):
     """get csv rows.
-
     Args:
         reddit: reddit praw's instance
         seq (list): List of Reddit item.
-
     Returns:
         list: Parsed reddit item.
     """
@@ -216,7 +202,6 @@ def get_csv_rows(reddit, seq):
 
 def write_csv(csv_rows, file_name=None):
     """write csv using csv module.
-
     Args:
         csv_rows (list): CSV rows.
         file_name (string): filename written
@@ -228,7 +213,7 @@ def write_csv(csv_rows, file_name=None):
     delimiter = ','
 
     # write csv using csv module
-    with open(file_name, "w") as f:
+    with open(file_name, "w", newline='') as f:
         csvwriter = csv.writer(f, delimiter=delimiter, quoting=csv.QUOTE_MINIMAL)
         csvwriter.writerow(csv_fields)
         for row in csv_rows:
@@ -237,7 +222,6 @@ def write_csv(csv_rows, file_name=None):
 
 def process(reddit, seq, file_name, folder_name):
     """Write csv and html from a list of results.
-
     Args:
       reddit: reddit praw's instance
       seq (list): list to write
